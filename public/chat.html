@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .message-container {
+            height: calc(100vh - 180px);
+        }
+        .message {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm fixed top-0 w-full z-10">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-semibold text-gray-800">
+                <i class="fas fa-link text-indigo-600 mr-2"></i>Neolink
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center bg-gray-100 px-4 py-2 rounded-lg">
+                        <span class="text-sm text-gray-600 mr-2">Room ID:</span>
+                        <span id="roomIdDisplay" class="text-sm font-medium text-gray-800"></span>
+                        <button id="copyRoomId" class="ml-2 text-indigo-600 hover:text-indigo-700">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div id="roomStatus" class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+                        <i class="fas fa-user mr-1"></i><span>Waiting for participant</span>
+                    </div>
+                </div>
+                    <a href="/" class="text-gray-600 hover:text-gray-800">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Chat Messages -->
+    <main class="container mx-auto px-4 pt-20 pb-24">
+        <div id="messages" class="message-container overflow-y-auto space-y-4 p-4">
+            <!-- Messages will be inserted here -->
+        </div>
+    </main>
+
+    <!-- Message Input -->
+    <footer class="fixed bottom-0 w-full bg-white border-t border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <form id="messageForm" class="flex space-x-4">
+                <input type="text" id="messageInput" 
+                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                       placeholder="Type your message...">
+                <button type="submit" 
+                        class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-200 flex items-center">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    Send
+                </button>
+            </form>
+        </div>
+    </footer>
+
+    <!-- Notification for copied room ID -->
+    <div id="copyNotification" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transform translate-y-[-100px] transition-transform duration-300">
+        Room ID copied to clipboard!
+    </div>
+
+    <script src="/chat.js"></script>
+</body>
+</html>
